@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <!-- Plotly CDN for rendering the charts -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+      body {
+        background-color: #333;
+        color: #fff;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #222;
+        border-radius: 10px;
+      }
+      h1 {
+        color: #fff;
+      }
+      .chart-container {
+        margin-bottom: 20px;
+      }
+      .log-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .log-table th,
+      .log-table td {
+        padding: 10px;
+        border: 1px solid #444;
+      }
+      .log-table th {
+        background-color: #555;
+        color: #fff;
+        text-align: left;
+      }
+      .log-table td {
+        background-color: #333;
+        color: #fff;
+      }
+      .plot-container {
+        filter: invert(75%) hue-rotate(180deg);
+      }
+      .card-rickroll {
+        text-align: center;
+        font-size: 2rem;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        color: #999;
+        font-size: 0.9rem;
+      }
+    </style>
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Dashboard</h1>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card-rickroll">
+            <div class="card-body">
+              <h5 class="card-title">Total Rickrolls</h5>
+              <p class="card-text">{{ rickroll_count }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Total Solves</h5>
+              <p class="card-text">{{ total_solves }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Total Visited Routes</h5>
+            <p class="card-text">{{ total_pages }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <div id="chart-routes">{{ chart_div_routes|safe }}</div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Total Unique IPs</h5>
+            <p class="card-text">{{ unique_ips }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <div id="chart-ips">{{ chart_div_ips|safe }}</div>
+      </div>
+
+      <h2>All Logs</h2>
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>IP Address</th>
+            <th>Visited Route</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in log_list %}
+          <tr>
+            <td>{{ log.timestamp }}</td>
+            <td>{{ log.ip_address }}</td>
+            <td>{{ log.visited_route }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <footer class="footer">
+        <p>Made by H4dd0ck 🚩</p>
+      </footer>
+    </div>
+    <script>
+      var mainSvgElements = document.getElementsByClassName("main-svg");
+      for (var i = 0; i < mainSvgElements.length; i++) {
+        mainSvgElements[i].style.cssText = "background: rgba(0, 0, 0, 0);";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,2 @@
+plotly==5.22.0
+Flask-HTTPAuth==4.8.0
