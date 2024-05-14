@@ -6,6 +6,8 @@ from collections import Counter
 import plotly.express as px
 import pandas as pd
 from flask_httpauth import HTTPBasicAuth
+import html
+import ipaddress
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
@@ -57,7 +59,14 @@ def rickroll_redirect(path):
     if path == 'rickrollcounter':
         return 'Counter path cannot be redirected.'
     
-    ip_address = request.remote_addr
+    if request.headers.getlist("X-Appengine-User-Ip"):
+        ip_address = request.headers.getlist("X-Appengine-User-Ip")[0]
+    else:
+        ip_address = request.remote_addr
+    
+    if not ipaddress.ip_address(ip_address):
+        return
+    ip_address = html.escape(ip_address)
     log_visit(ip_address, path)
 
     if path == 'nsec':
