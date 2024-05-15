@@ -4,3 +4,4 @@ Flask-HTTPAuth==4.8.0
 gunicorn==22.0.0
 html==1.16.0
 ipaddress
+pytz==2024.1

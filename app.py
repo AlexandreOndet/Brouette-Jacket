@@ -8,10 +8,15 @@ import pandas as pd
 from flask_httpauth import HTTPBasicAuth
 import html
 import ipaddress
+import pytz
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
+
+est = pytz.timezone('US/Eastern')
+utc = pytz.utc
+fmt = '%Y-%m-%d %H:%M:%S %Z%z'
 
 config_file = 'config.json'
 log_file = 'logs.json'
@@ -114,8 +119,8 @@ def dashboard():
 
     # List of all logs
     log_list = [{'timestamp': log['timestamp'], 'ip_address': log['ip_address'], 'visited_route': log['visited_route']} for sublist in logs.values() for log in sublist]
-    log_list_sorted = sorted(log_list, key=lambda x: datetime.strptime(x['timestamp'], '%Y-%m-%d %H:%M:%S'), reverse=True)
-
+    log_list_sorted = sorted(log_list, key=lambda x: datetime.strptime(x['timestamp'], '%Y-%m-%d %H:%M:%S').astimezone(est).strftime(fmt), reverse=True)
+    
     return render_template('dashboard.html', chart_div_routes=chart_div_routes, chart_div_ips=chart_div_ips, log_list=log_list_sorted, rickroll_count=rickroll_count, unique_ips=unique_ips, total_pages=total_pages, total_solves=total_solves)
 
 
