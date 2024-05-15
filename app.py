@@ -16,7 +16,7 @@ auth = HTTPBasicAuth()
 
 est = pytz.timezone('US/Eastern')
 utc = pytz.utc
-fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+fmt = '%Y-%m-%d %H:%M:%S'
 
 config_file = 'config.json'
 log_file = 'logs.json'
@@ -125,8 +125,8 @@ def dashboard():
         chart_div_routes = ''
         chart_div_ips = ''
 
-    log_list = [{'timestamp': log['timestamp'], 'ip_address': log['ip_address'], 'visited_route': log['visited_route']} for sublist in logs.values() for log in sublist]
-    log_list_sorted = sorted(log_list, key=lambda x: datetime.strptime(x['timestamp'], '%Y-%m-%d %H:%M:%S').replace(tzinfo=utc).astimezone(est).strftime(fmt), reverse=True)
+    log_list = [{'timestamp': datetime.strptime(log['timestamp'], fmt).replace(tzinfo=utc).astimezone(est).strftime(fmt), 'ip_address': log['ip_address'], 'visited_route': log['visited_route']} for sublist in logs.values() for log in sublist]
+    log_list_sorted = sorted(log_list, key=lambda x: datetime.strptime(x['timestamp'], fmt), reverse=True)
     
     return render_template('dashboard.html', chart_div_routes=chart_div_routes, chart_div_ips=chart_div_ips, log_list=log_list_sorted, rickroll_count=rickroll_count, unique_ips=unique_ips, total_pages=total_pages, total_solves=total_solves)
 
