@@ -73,6 +73,7 @@ def rickroll_redirect(path):
         ip_object = ipaddress.ip_address(ip_address)
     except ValueError:
         print("The IP address '{ip_address}' is not valid")
+        print(request.headers)
         ip_object = ipaddress.ip_address('0.0.0.0')
 
     ip_address = html.escape(str(ip_object))
@@ -115,11 +116,15 @@ def dashboard():
         ip_addresses = [ip[0] for ip in top_ips]
         interaction_counts = [ip[1] for ip in top_ips]
 
-    fig_routes = px.bar(x=route_names, y=visit_counts, labels={'x': 'Route', 'y': 'Visits'}, title='Top Visited Routes')
-    chart_div_routes = fig_routes.to_html(full_html=False)
+    try:
+        fig_routes = px.bar(x=route_names, y=visit_counts, labels={'x': 'Route', 'y': 'Visits'}, title='Top Visited Routes')
+        chart_div_routes = fig_routes.to_html(full_html=False)
 
-    fig_ips = px.bar(x=ip_addresses, y=interaction_counts, labels={'x': 'IP Address', 'y': 'Interactions'}, title='Top IPs with Most Interactions')
-    chart_div_ips = fig_ips.to_html(full_html=False)
+        fig_ips = px.bar(x=ip_addresses, y=interaction_counts, labels={'x': 'IP Address', 'y': 'Interactions'}, title='Top IPs with Most Interactions')
+        chart_div_ips = fig_ips.to_html(full_html=False)
+    except ValueError:
+        chart_div_routes = ''
+        chart_div_ips = ''
 
     # List of all logs
     log_list = [{'timestamp': log['timestamp'], 'ip_address': log['ip_address'], 'visited_route': log['visited_route']} for sublist in logs.values() for log in sublist]
