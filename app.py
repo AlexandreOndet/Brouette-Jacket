@@ -73,7 +73,8 @@ def rickroll_redirect(path):
         ip_object = ipaddress.ip_address(ip_address)
     except ValueError:
         print("The IP address '{ip_address}' is not valid")
-        return
+        ip_object = ipaddress.ip_address('0.0.0.0')
+
     ip_address = html.escape(str(ip_object))
     log_visit(ip_address, path)
 
