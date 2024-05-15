@@ -65,7 +65,7 @@ def rickroll_redirect(path):
         return 'Counter path cannot be redirected.'
     
     if request.headers.getlist("X-Forwarded-For"):
-        ip_address = request.headers.getlist("X-Forwarded-For")[0]
+        ip_address = request.headers.getlist("X-Forwarded-For")[0].split(',')[0]
     else:
         ip_address = request.remote_addr
     
