@@ -69,9 +69,12 @@ def rickroll_redirect(path):
     else:
         ip_address = request.remote_addr
     
-    if not ipaddress.ip_address(ip_address):
+    try:    
+        ip_object = ipaddress.ip_address(ip_address)
+    except ValueError:
+        print("The IP address '{ip_address}' is not valid")
         return
-    ip_address = html.escape(ip_address)
+    ip_address = html.escape(str(ip_object))
     log_visit(ip_address, path)
 
     if path == 'nsec':
