@@ -64,8 +64,8 @@ def rickroll_redirect(path):
     if path == 'rickrollcounter':
         return 'Counter path cannot be redirected.'
     
-    if request.headers.getlist("X-Appengine-User-Ip"):
-        ip_address = request.headers.getlist("X-Appengine-User-Ip")[0]
+    if request.headers.getlist("X-Forwarded-For"):
+        ip_address = request.headers.getlist("X-Forwarded-For")[0]
     else:
         ip_address = request.remote_addr
     
