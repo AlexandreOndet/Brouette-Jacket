@@ -1,6 +1,6 @@
 plotly==5.22.0
 pandas==2.2.2
-Flask-HTTPAuth==4.8.0
+Flask-HTTPAuth==4.8.1
 gunicorn==22.0.0
 ipaddress
 pytz==2024.1
