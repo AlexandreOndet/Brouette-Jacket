@@ -81,7 +81,7 @@ def rickroll_redirect(path):
     if path == 'nsec':
         return redirect('https://youtu.be/SPlQpGeTbIE')
 
-    return redirect('https://youtu.be/mx86-rTclzA')
+    return redirect('https://youtu.be/Aq5WXmQQooo')
 
 @app.route('/rickrollcounter')
 @auth.login_required
