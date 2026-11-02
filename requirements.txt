@@ -5,4 +5,4 @@ Flask==3.1.3
 Werkzeug==3.1.9
 gunicorn==26.2.0
 ipaddress
-pytz==2026.5
+pytz==2026.6
